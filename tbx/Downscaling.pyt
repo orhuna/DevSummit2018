@@ -2,7 +2,7 @@
 Source Name:   SVM.pyt
 Version:       ArcGIS Pro
 Author:        Environmental Systems Research Institute Inc.
-Description:   Python tool to perform hierarchical density based scan clustering
+Description:   Python tool to perform statistical climate downscaling using SVM and Ridge Regression
 """
 
 import arcpy as ARCPY
