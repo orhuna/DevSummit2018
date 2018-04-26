@@ -179,7 +179,7 @@ class SVM(object):
 
         y_hat_downscale = svr_rbf.predict(dataPredict)
 
-        #writeFC(predictFC, outputFC, y_hat_downscale)
+        writeFC(predictFC, outputFC, y_hat_downscale)
 
         return
 
@@ -341,6 +341,6 @@ class RidgeRegression(object):
 
         y_hat_downscale = ridge.predict(dataPredict)
 
-        #writeFC(predictFC, outputFC, y_hat_downscale)
+        writeFC(predictFC, outputFC, y_hat_downscale)
 
         return
