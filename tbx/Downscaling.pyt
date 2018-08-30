@@ -9,7 +9,6 @@ import arcpy as ARCPY
 import arcgisscripting as ARC
 import numpy as NUM
 import SSDataObject as SSDO
-import matplotlib.pyplot as PLT
 from sklearn.svm import SVR
 from sklearn.linear_model import Ridge as RIDGE
 from sklearn.linear_model import RidgeCV as RIDGECV
@@ -157,16 +156,6 @@ class SVM(object):
         #Set-up SVM Predictor
         svr_rbf = SVR(kernel=kernelType, C=C, gamma=gamma)
         y_rbf = svr_rbf.fit(dataPredict, predictand).predict(dataPredict)
-        
-        #Compare Observed and Predicted Data
-        lw = 2
-        PLT.plot(y_rbf, color='navy', lw=lw, label='Model Fit')
-        PLT.plot(predictand, color='red', lw=lw, label='Station Data')
-        PLT.title('Support Vector Regression Prediction')
-        PLT.xlabel('Time (days)')
-        PLT.ylabel('Temperature (C)')
-        PLT.legend()
-        PLT.show()
 
         ##Perform Prediction
         ssdoPred = SSDO.SSDataObject(predictFC, useChordal = False)
@@ -301,16 +290,6 @@ class RidgeRegression(object):
 
             ridge.fit(dataPredict, predictand)
             ARCPY.AddMessage('Optimum regularization strength is {0}'.format(ridge.alpha_))
-            # Display results
-            ax = PLT.gca()
-            ax.plot(ridge.alphas, NUM.mean(ridge.cv_values_, axis = 0))
-            ax.set_xscale('log')
-            ax.set_xlim(ax.get_xlim()[::-1])  # reverse axis
-            PLT.xlabel('Regularization Strength')
-            PLT.ylabel('CV')
-            PLT.title('Fit Quality (CV) wrt Alpha')
-            PLT.axis('tight')
-            PLT.show()
 
         else:
             ridge = RIDGE(alpha=alpha, fit_intercept=intercept, normalize =  normalize)
@@ -319,17 +298,6 @@ class RidgeRegression(object):
         yhat = ridge.predict(dataPredict)
         # #############################################################################
         
-
-         #Compare Observed and Predicted Data
-        lw = 2
-        PLT.plot(ridge.predict(dataPredict), color='navy', lw=lw, label='Model Fit')
-        PLT.plot(predictand, color='red', lw=lw, label='Station Data')
-        PLT.title('Support Vector Regression Prediction')
-        PLT.xlabel('Time (days)')
-        PLT.ylabel('Temperature (C)')
-        PLT.legend()
-        PLT.show()
-
         ##Perform Prediction
         ssdoPred = SSDO.SSDataObject(predictFC, useChordal = False)
         ssdoPred.obtainData(ssdoPred.oidName, predictVars)
